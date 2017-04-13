@@ -1,0 +1,23 @@
+import {logger} from 'logger'
+import {GameSession} from './session/session.js'
+import {GameMaster} from './master/master.js'
+import {ActionSet} from './action/actionSet.js'
+
+// export class GameEngine {
+class GameEngine {
+
+	constructor(props) {
+		this.session = null
+		this.actions = new ActionSet()
+		this.master = new GameMaster({actions: this.actions})
+		console.log("Game Engine created.")
+	}
+	
+	newSession(props){
+		this.session = new GameSession({world: props.world, gm: this.master})
+		this.session.start()
+	}
+
+}
+
+export let engine = new GameEngine()
