@@ -18,10 +18,17 @@ export function print(props) {
 
     if (props.attack) {
       console.log("- ATTACK: ");
-      // console.log("-- Base Damage: " +  this.combatAbility.getDamageRange().min + "-" + this.combatAbility.getDamageRange().max);
-      // console.log("-- Crit Chance: " +  this.combatAbility.getCritChance() + "%");
-      // console.log("-- Crit Damage: x" + this.combatAbility.getCritMultipier());
+      console.log("-- Base Damage: " +  this.getBaseDamage().min + "-" + this.getBaseDamage().max);
+			console.log("-- Crit Chance: " +  this.getCritChance() + "%");
+      console.log("-- Crit Damage: x" + this.getCritMultiplier());
     }
+
+    if (props.defense) {
+      console.log("- DEFENSE: ");
+			console.log("-- Dodge Chance: " +  this.getDodgeChance() + "%");
+      console.log("-- Damage Threshold: " + this.getDT());
+    }
+
 
     if (props.xp) {
       console.log("- EXPERIENCE: ");

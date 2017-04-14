@@ -5,19 +5,26 @@ import {Actor} from './actor/actor.js'
 export class GameWorld {
 
 	constructor(props) {
-		this.objectHash = {}
-		this.objectList = []
+
+		this.currentLocation = {}
+		this.currentLocation.objectHash = {}
+		this.currentLocation.objectList = []
+
 		console.log("Game World created.")
+		
 	}
 
+	getCurrentLocation(props) {
+		return this.currentLocation
+	}
 	
 	addObject(props){
-		this.objectHash[props.obj.id] = props.obj
-		this.objectList.push(props.obj.id)
+		this.currentLocation.objectHash[props.obj.id] = props.obj
+		this.currentLocation.objectList.push(props.obj)
 	}
 
 	printWorld() {
-		console.dir(this.objectHash)
+		console.dir(this.currentLocation)
 	}
 
 	customPreload() {

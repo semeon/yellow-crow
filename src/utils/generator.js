@@ -21,7 +21,9 @@ export class Generator {
 		let hp = dice.rollD10(10).value
 		
 		let char = new Actor({id: props.id, name: props.name, special: special, hp: hp, hpMax: hp})
-		char.print({special: true, health: true})
+		
+		// char.print({special: true, health: true, attack: true, defense: true})
+		
 		return char
 	}
 

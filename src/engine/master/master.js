@@ -10,7 +10,7 @@ export class GameMaster {
 	
 	init(props) {
 		this.location = props.location
-		this.actors = props.location.actors
+		this.actors = props.location.objectList
 	}
 	
 	startGame(props){
@@ -26,6 +26,4 @@ export class GameMaster {
 		}
 
 	}
-
-
 }

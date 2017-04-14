@@ -1,6 +1,12 @@
 /* globals __DEV__ */
+import {app} from 'app'
 import Phaser from 'phaser'
+
+import {LocationMap} from '../maps/LocationMap'
+
+
 import Mushroom from '../sprites/Mushroom'
+import Actor from '../sprites/ActorSprite'
 
 export default class extends Phaser.State {
   init () {}
@@ -16,6 +22,10 @@ export default class extends Phaser.State {
     banner.smoothed = false
     banner.anchor.setTo(0.5)
 
+
+		this.map = new LocationMap({game: this.game})
+		this.map.init()
+
     this.mushroom = new Mushroom({
       game: this,
       x: this.world.centerX,
@@ -23,7 +33,17 @@ export default class extends Phaser.State {
       asset: 'mushroom'
     })
 
+
+    this.actor1 = new Actor({
+      game: this,
+      x: 50,
+      y: 50,
+      asset: 'mushroom',
+			actorObj: app.getCurrentLocation().objectList[0]
+    })
+
     this.game.add.existing(this.mushroom)
+    this.game.add.existing(this.actor1)
   }
 
   render () {

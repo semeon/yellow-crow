@@ -4,8 +4,9 @@ import {logger} from 'logger'
 
 import Game from './phaser/phaserMain'
 
-let game = new Game()
+
 
 app.start()
+// logger.log({m: "> Test dice D20: " + dice.rollD20().value})
 
-logger.log({m: "> Test dice D20: " + dice.rollD20().value})
+let game = new Game()

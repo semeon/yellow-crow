@@ -7,12 +7,9 @@ export class Actor extends GameObject {
 
 	constructor(props) {
   	super(props)
-
 		this.special = props.special
-		
 		this.hpMax = props.special.E * 10
 		this.hp = this.hpMax
-		
 	}
 	
   isAlive() {
@@ -24,6 +21,14 @@ export class Actor extends GameObject {
 // SPECIAL
 import {Special} from './special.js'
 Actor.prototype.getSpecial = Special.getSpecial
+
+// Abilities
+import {Abilities} from './abilities.js'
+Actor.prototype.getBaseDamage = Abilities.getBaseDamage
+Actor.prototype.getCritChance = Abilities.getCritChance
+Actor.prototype.getCritMultiplier = Abilities.getCritMultiplier
+Actor.prototype.getDodgeChance = Abilities.getDodgeChance
+Actor.prototype.getDT = Abilities.getDT
 
 
 // Combat actions

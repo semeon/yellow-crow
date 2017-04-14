@@ -13,7 +13,10 @@ class App {
 		this.world.customPreload()
 		this.world.printWorld()
 		this.ge.newSession({world: this.world})
+	}
 
+	getCurrentLocation(props) {
+		return this.world.getCurrentLocation()
 	}
 	
 }
