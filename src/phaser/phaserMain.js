@@ -9,13 +9,18 @@ import GameState from './states/Game'
 
 import config from './config'
 
-export default class Game extends Phaser.Game {
+import LocationMap from './maps/LocationMap'
+
+
+export default class PhaserUI extends Phaser.Game {
   constructor (props) {
     const docElement = document.documentElement
     const width = docElement.clientWidth > config.gameWidth ? config.gameWidth : docElement.clientWidth
     const height = docElement.clientHeight > config.gameHeight ? config.gameHeight : docElement.clientHeight
 
     super(width, height, Phaser.CANVAS, 'content', null)
+
+		this.locationMap = new LocationMap({game: this})
 
     this.state.add('Boot', BootState, false)
     this.state.add('Splash', SplashState, false)
@@ -25,4 +30,3 @@ export default class Game extends Phaser.Game {
   }
 }
 
-// window.game = new Game()

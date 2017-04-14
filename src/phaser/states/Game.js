@@ -2,7 +2,7 @@
 import {app} from 'app'
 import Phaser from 'phaser'
 
-import {LocationMap} from '../maps/LocationMap'
+// import {LocationMap} from '../maps/LocationMap'
 
 
 import Mushroom from '../sprites/Mushroom'
@@ -22,9 +22,7 @@ export default class extends Phaser.State {
     banner.smoothed = false
     banner.anchor.setTo(0.5)
 
-
-		this.map = new LocationMap({game: this.game})
-		this.map.init()
+		this.game.locationMap.init()
 
     this.mushroom = new Mushroom({
       game: this,
