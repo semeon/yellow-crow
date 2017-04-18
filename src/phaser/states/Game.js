@@ -2,11 +2,9 @@
 import {app} from 'app'
 import Phaser from 'phaser'
 
-// import {LocationMap} from '../maps/LocationMap'
-
-
 import Mushroom from '../sprites/Mushroom'
 import Actor from '../sprites/ActorSprite'
+import GameObject from '../sprites/GameObjectSprite'
 
 export default class extends Phaser.State {
   init () {}
@@ -31,16 +29,18 @@ export default class extends Phaser.State {
       asset: 'mushroom'
     })
 
-
     this.actor1 = new Actor({
       game: this,
-      x: 50,
-      y: 50,
-      asset: 'mushroom',
+      x: 17,
+      y: 16,
+      asset: 'droid',
 			actorObj: app.getCurrentLocation().objectList[0]
     })
 
-    this.game.add.existing(this.mushroom)
+		this.actor1.init()
+
+
+    // this.game.add.existing(this.mushroom)
     this.game.add.existing(this.actor1)
   }
 

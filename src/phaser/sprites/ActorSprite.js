@@ -1,13 +1,13 @@
 import Phaser from 'phaser'
+import GameObject from './GameObjectSprite'
 
-export default class extends Phaser.Sprite {
-  constructor ({ game, x, y, asset, actorObj }) {
-    super(game, x, y, asset)
-    this.anchor.setTo(0.5)
-		this.actorObject = actorObj
+export default class Actor extends GameObject {
+  constructor (props) {
+    super({game: props.game, 
+					x: props.x, 
+					y: props.y, 
+					asset: props.asset, 
+					gameObj: props.actorObj})
   }
 
-  update () {
-    // this.x += 1
-  }
 }
