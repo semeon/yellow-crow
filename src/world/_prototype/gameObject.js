@@ -5,10 +5,12 @@ export class GameObject {
 
 	constructor(props) {
 		this.id = props.id
+		this.type = "generic"
 		this.name = props.name
-
-		this.hp = props.hp
+		this.assetId = props.assetId
 		this.hpMax = props.hpMax
+		this.hp = this.hpMax
+		this.destructable = true
 	}
 
 	getName() {

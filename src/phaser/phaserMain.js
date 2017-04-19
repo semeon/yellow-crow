@@ -20,7 +20,8 @@ export default class PhaserUI extends Phaser.Game {
 
     super(width, height, Phaser.CANVAS, 'content', null)
 
-		this.locationMap = new LocationMap({game: this})
+		let locationData = app.getCurrentLocation()
+		this.locationMap = new LocationMap({game: this, data: locationData, tile: 32, width: locationData.width, height: locationData.height})
 
     this.state.add('Boot', BootState, false)
     this.state.add('Splash', SplashState, false)

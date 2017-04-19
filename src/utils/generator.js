@@ -1,11 +1,17 @@
 import {dice} from 'dice'
 import {Actor} from '../world/actor/actor.js'
-
+import {TerrainObject} from '../world/items/terrainObject.js'
 
 export class Generator {
 
   constructor(props) {
   }
+
+	generateTerrainObject(props) {
+		let object = new TerrainObject({id: props.id, name: props.name, hpMax: props.hp, assetId: props.assetId})
+		
+		return object
+	}
 
 	generateActor(props) {
 		let special = {}
@@ -20,7 +26,7 @@ export class Generator {
 		
 		let hp = dice.rollD10(10).value
 		
-		let char = new Actor({id: props.id, name: props.name, special: special, hp: hp, hpMax: hp})
+		let char = new Actor({id: props.id, name: props.name, special: special, assetId: props.assetId})
 		
 		// char.print({special: true, health: true, attack: true, defense: true})
 		

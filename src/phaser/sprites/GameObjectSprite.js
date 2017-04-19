@@ -2,8 +2,16 @@ import Phaser from 'phaser'
 
 export default class GameObject extends Phaser.Sprite {
   constructor ({ game, x, y, asset, gameObj }) {
+
+
+			console.log("  x, y, asset: ")
+			console.dir(x)
+			console.dir(y)
+			console.dir(asset)
+			console.dir(gameObj)
+		
     super(game, x, y, asset)
-    this.anchor.setTo(0.5)
+    // this.anchor.setTo(0.5)
 		this.gameObj = gameObj
 		this.inputEnabled = true
 		this.events.onInputDown.add(this.onClick, this)

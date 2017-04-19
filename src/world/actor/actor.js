@@ -6,10 +6,17 @@ import {GameObject} from '../_prototype/gameObject.js'
 export class Actor extends GameObject {
 
 	constructor(props) {
-  	super(props)
+		let hpMax = props.special.E * 10
+
+  	super({
+			id: props.id, 
+			name: props.name, 
+			assetId: props.assetId,
+			hpMax: hpMax
+		})
+		this.type = "actor"
 		this.special = props.special
-		this.hpMax = props.special.E * 10
-		this.hp = this.hpMax
+		this.hpMax = hpMax
 	}
 	
   isAlive() {
