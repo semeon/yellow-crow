@@ -2,14 +2,6 @@ import Phaser from 'phaser'
 
 export default class GameObject extends Phaser.Sprite {
   constructor ({ game, x, y, asset, gameObj }) {
-
-
-			console.log("  x, y, asset: ")
-			console.dir(x)
-			console.dir(y)
-			console.dir(asset)
-			console.dir(gameObj)
-		
     super(game, x, y, asset)
     // this.anchor.setTo(0.5)
 		this.gameObj = gameObj
@@ -25,27 +17,27 @@ export default class GameObject extends Phaser.Sprite {
 	
 	onClick(props) {
 		if (this.game.input.activePointer.leftButton.isDown) {
+			console.log("> Left button click on: " + this.gameObj.getName())
 			this.onLMBClick()
 			
 		} else if(this.game.input.activePointer.rightButton.isDown) {
+			console.log("> Right button click on: " + this.gameObj.getName())
 			this.onRMBClick()
 
 		} else if(this.game.input.activePointer.middleButton.isDown) {
+			console.log("> Middle button click on: " + this.gameObj.getName())
 			this.onMMBClick()
 		}
 		
 	}
 	
 	onLMBClick(props) {
-			console.log("> Left button click on: " + this.gameObj.getName())
 	}
 
 	onRMBClick(props) {
-			console.log("> Right button click on: " + this.gameObj.getName())
 	}
 
 	onMMBClick(props) {
-			console.log("> Middle button click on: " + this.gameObj.getName())
 	}
 	
 }

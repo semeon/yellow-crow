@@ -21,8 +21,8 @@ export class GameMaster {
 	customFlow1(props) {
 		
 		for (let i=0; i<2; i++) {
-			this.actions.attack({actor: this.actors[0].object, target: this.actors[1].object})
-			this.actions.attack({actor: this.actors[1].object, target: this.actors[0].object})
+			// this.actions.attack({actor: this.actors[0].object, target: this.actors[1].object})
+			// this.actions.attack({actor: this.actors[1].object, target: this.actors[0].object})
 		}
 
 	}

@@ -1,11 +1,11 @@
 export function print(props) {
     console.log("- Character: " + this.getName())
 
-    if (props.health) {
+    if (props && props.health) {
       console.log("- HEALTH: " + this.getHp() + "/" + this.getHpMax())
     }
 
-    if(props.special) {
+    if(props && props.special) {
       console.log("- SPECIAL:")
       console.log("-- S: " +    this.getSpecial({attribute: "S"}))
       console.log("-- P: " +    this.getSpecial({attribute: "P"}))
@@ -16,21 +16,21 @@ export function print(props) {
       console.log("-- L: " +    this.getSpecial({attribute: "L"}))
     }
 
-    if (props.attack) {
+    if (props && props.attack) {
       console.log("- ATTACK: ");
       console.log("-- Base Damage: " +  this.getBaseDamage().min + "-" + this.getBaseDamage().max);
 			console.log("-- Crit Chance: " +  this.getCritChance() + "%");
       console.log("-- Crit Damage: x" + this.getCritMultiplier());
     }
 
-    if (props.defense) {
+    if (props && props.defense) {
       console.log("- DEFENSE: ");
 			console.log("-- Dodge Chance: " +  this.getDodgeChance() + "%");
       console.log("-- Damage Threshold: " + this.getDT());
     }
 
 
-    if (props.xp) {
+    if (props && props.xp) {
       console.log("- EXPERIENCE: ");
       // console.log("-- XP:  " + this.exp.getXP());
       // console.log("-- LVL: " + this.exp.getLevel());

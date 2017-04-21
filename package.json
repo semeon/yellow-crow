@@ -25,6 +25,7 @@
     "webpack": "^2.2.0"
   },
   "dependencies": {
+    "chance": "^1.0.6",
     "phaser-ce": "^2.7.3",
     "webfontloader": "^1.6.27"
   }
