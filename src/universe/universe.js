@@ -10,7 +10,6 @@ export class GameUniverse {
 		this.players = []
 		this.playersHash = {}
 		this.currentLocation
-		this.selectedPlayer
 	}
 	
 	init(props) {
@@ -20,8 +19,6 @@ export class GameUniverse {
 
 		let pcMonkeyWrench = generator.generateActor({name: "Monkey Wrench", control: "player",	assetId: "droid"})
 		this.players.push(pcMonkeyWrench)
-
-		this.selectedPlayer = this.players[0]	
 
 		this.currentLocation = generator.generateLocation()
 		console.log("Game World created.")
@@ -34,10 +31,6 @@ export class GameUniverse {
 	getPlayers(props) {
 		return this.players
 	}	
-
-	setSelectedPlayer(props) {
-		this.selectedPlayer = props.player
-	}
 	
 	printWorld() {
 		console.dir(this.currentLocation)

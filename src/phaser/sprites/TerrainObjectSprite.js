@@ -5,8 +5,8 @@ import SpriteHighlighter from './SpriteHighlighter'
 
 export default class TerrainObject extends MapObject {
   constructor (props) {
+		if(!props.higlightColor) props.higlightColor =  0x0000dd
     super(props)
-		this.higlightColor = 0xdd0000
   }
 
 

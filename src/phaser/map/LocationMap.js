@@ -16,7 +16,7 @@ export default class LocationMap {
 
 		this.locationData = props.data
 		this.playerData = props.playerData
-		
+
 		this.tileSize = props.tile
 		this.width = props.data.width
 		this.height = props.data.height
@@ -48,6 +48,9 @@ export default class LocationMap {
 	}
 	
 	init(props) {
+		
+		this.game.uiState.setSelectedActor({actor: this.playerData[0]})
+		
 		this.mapTerrainGroup = this.game.add.group()
 		this.mapCreaturesGroup = this.game.add.group()
 		this.mapItemsGroup = this.game.add.group()

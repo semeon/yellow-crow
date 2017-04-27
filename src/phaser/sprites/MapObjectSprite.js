@@ -3,6 +3,9 @@ import SpriteHighlighter from './SpriteHighlighter'
 
 export default class MapObject extends Phaser.Sprite {
   constructor (props) {
+		let higlightColor = 0x000000
+		if (props.higlightColor) higlightColor = props.higlightColor
+
     super(props.game, props.x, props.y, props.asset)
 
 		this.game = props.game
@@ -12,11 +15,10 @@ export default class MapObject extends Phaser.Sprite {
 		this.events.onInputDown.add(this.onClick, this)
 		this.tileSize = props.game.locationMap.tileSize
 
-		this.higlightColor = 0x000000
+		this.higlighter = new SpriteHighlighter({game: this.game, parent: this, colour: higlightColor})
   }
 
 	init() {
-		this.higlighter = new SpriteHighlighter({game: this.game, parent: this, colour: this.higlightColor})
 	}
 
   update () {
