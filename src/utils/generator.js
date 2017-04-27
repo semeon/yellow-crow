@@ -107,7 +107,8 @@ export class Generator {
 		}	else {
 			hp = dice.rollD10(5).value
 		}
-		let object = new TerrainObject({id: props.id, name: props.name, hpMax: props.hp, assetId: props.assetId})
+		
+		let object = new TerrainObject({id: id, name: props.name, hpMax: props.hp, assetId: props.assetId})
 		
 		return object
 	}
