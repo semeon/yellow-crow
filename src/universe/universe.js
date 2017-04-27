@@ -1,7 +1,6 @@
 import {logger} from 'logger'
 import {generator} from 'generator'
-// import {Actor} from './actor/actor.js'
-// import {Terrain} from './items/terrainObject.js'
+
 
 
 export class GameUniverse {

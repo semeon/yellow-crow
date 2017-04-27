@@ -21,7 +21,8 @@ export class Attack extends Action {
 		let dodge = props.target.dodgeThrow()
 
 		// Step 3: target receive damage
-		if (!dodge.success) props.target.receiveAttack({attack: attack, source: props.actor})
+		if (!dodge || !dodge.success) props.target.receiveAttack({attack: attack, source: props.actor})
+
 
 		this._complete(props)
 	}

@@ -17,6 +17,10 @@ export class GameMaster {
 		this.customFlow1()
 	}
 
+	performAttack(props) {
+		this.actions.attack({actor: props.actor, target: props.target})
+		
+	}
 
 	customFlow1(props) {
 		

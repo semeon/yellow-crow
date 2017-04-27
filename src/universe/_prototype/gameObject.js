@@ -44,6 +44,21 @@ export class GameObject {
     }
   }
 
+	dodgeThrow() {
+		return false
+	}
+
+	receiveAttack(props) {
+		// props.damage, props.critical
+		this.takeDamage({damage: props.attack.damage})
+
+		let message = " - "
+		message += this.getName() + " was"
+		if (props.attack.critical) message = message + " critically"
+		message += " hit for " + props.attack.damage + " HP"
+		logger.log({m: message})
+	}
+
 }
 
 import {print} from '../../utils/print.js'

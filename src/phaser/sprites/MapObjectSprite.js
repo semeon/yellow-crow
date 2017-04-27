@@ -19,7 +19,20 @@ export default class MapObject extends Phaser.Sprite {
 		this.targetHiglighter = new SpriteHighlighter({game: this.game, parent: this, colour: 0xdd0000})
   }
 
+
+	onLMBClick(props) {
+		this.game.uiState.setSelectedTarget({target: this.gameObj})
+	}
+
+	onRMBClick(props) {
+		this.onAttackClick()
+	}
+
+	onMMBClick(props) {
+	}
+
 	init() {
+		
 	}
 
   update () {
@@ -37,6 +50,17 @@ export default class MapObject extends Phaser.Sprite {
   		}
   }
 
+	onAttackClick() {
+		if ( !this.game.uiState.isSelectedActor({actor: this.gameObj}) ) {
+			if (this.game.uiState.isSelectedTarget({target: this.gameObj})) {
+				this.game.gm.performAttack({actor: this.game.uiState.getSelectedActor(), target: this.game.uiState.getSelectedTarget() })
+
+			} else {
+				this.game.uiState.setSelectedTarget({target: this.gameObj})
+			}
+		}
+	}
+
 	onClick(props) {
 		if (this.game.input.activePointer.leftButton.isDown) {
 			console.log("> Left button click on: " + this.gameObj.getName() + " / " + this.gameObj.getId())
@@ -53,14 +77,6 @@ export default class MapObject extends Phaser.Sprite {
 		
 	}
 	
-	onLMBClick(props) {
-		this.game.uiState.setSelectedTarget({target: this.gameObj})
-	}
 
-	onRMBClick(props) {
-	}
-
-	onMMBClick(props) {
-	}
 	
 }

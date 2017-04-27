@@ -19,6 +19,10 @@ class App {
 		return this.universe
 	}
 
+	getGM(props) {
+		return this.ge.master
+	}
+
 	getCurrentLocation(props) {
 		return this.universe.getCurrentLocation()
 	}
