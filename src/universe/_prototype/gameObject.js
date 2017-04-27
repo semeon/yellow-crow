@@ -13,6 +13,9 @@ export class GameObject {
 		this.destructable = true
 	}
 
+	getId() {
+		return this.id
+	}
 	getName() {
 		return this.name
 	}

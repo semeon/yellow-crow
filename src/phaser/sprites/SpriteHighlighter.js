@@ -14,21 +14,22 @@ export default class SpriteHighlighter {
 																	this.parent.tileSize*0.15)			
   }
 
-	highlight(props) {
+
+	setOn(props) {
 		this.isOn = true
     this.highlighter.revive()
 	}
 
-	unhighlight(props) {
+	setOff(props) {
     this.highlighter.kill()
 		this.isOn = false
 	}
 
 	toggleHighlights(props) {
 		if(!this.isOn) {
-			this.highlight()
+			this.setOn()
 		} else {
-			this.unhighlight()
+			this.setOff()
 		}
 	}
 }

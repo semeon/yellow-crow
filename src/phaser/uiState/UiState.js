@@ -12,6 +12,10 @@ export default class UiState {
 		this.selectedTarget = props.target
 	}
 
+	resetSelectedTarget(props) {
+		this.selectedTarget = null
+	}
+
 	getSelectedActor(props) {
 		return this.selectedActor
 	}
@@ -22,15 +26,14 @@ export default class UiState {
 
 	isSelectedActor(props) {
 		let result = false
-		if(props && props.actor.id == this.selectedActor.id) result = true
+		if(props && this.selectedActor && props.actor.id == this.selectedActor.id) result = true
 			
 		return result
 	}
 
 	isSelectedTarget(props) {
 		let result = false
-		if(props && props.target.id == this.selectedTarget.id) result = true
-			
+		if(props && this.selectedTarget && props.target.id == this.selectedTarget.id) result = true
 		return result
 	}
 

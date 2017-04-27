@@ -7,6 +7,8 @@ var Chance = require('chance')
 
 export class Generator {
   constructor(props) {
+		this.counter = 0
+		
   }
 
 	// =============================
@@ -28,6 +30,12 @@ export class Generator {
 
 	// =============================
 
+	getCount(props) {
+		this.counter += 1
+		return this.counter
+	}
+
+
 	generateLocation(props) {
 		
 		let id
@@ -37,7 +45,7 @@ export class Generator {
 			id = "map-"
 			id += Date.now()
 			id += "-"
-			id += dice.rollD20(10).value
+			id += this.getCount()
 		}
 		
 		let height = 16
@@ -98,7 +106,7 @@ export class Generator {
 			id = "terrain-"
 			id += Date.now()
 			id += "-"
-			id += dice.rollD20(10).value
+			id += this.getCount()
 		}
 
 		let hp
@@ -122,7 +130,7 @@ export class Generator {
 			id = "actor-"
 			id += Date.now()
 			id += "-"
-			id += dice.rollD20(10).value
+			id += this.getCount()
 		}
 
 		let special = {}

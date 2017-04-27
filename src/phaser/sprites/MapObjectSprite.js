@@ -15,36 +15,46 @@ export default class MapObject extends Phaser.Sprite {
 		this.events.onInputDown.add(this.onClick, this)
 		this.tileSize = props.game.locationMap.tileSize
 
-		this.higlighter = new SpriteHighlighter({game: this.game, parent: this, colour: higlightColor})
+		this.actorHiglighter = new SpriteHighlighter({game: this.game, parent: this, colour: 0xdddd00})
+		this.targetHiglighter = new SpriteHighlighter({game: this.game, parent: this, colour: 0xdd0000})
   }
 
 	init() {
 	}
 
-  // update () {
-  // 		if ( this.game.uiState.isSelectedActor({actor: this.gameObj}) ) {
-  // 			this.higlighter.highlight()
-  // 		}
-  // }
+  update () {
+  		if ( this.game.uiState.isSelectedActor({actor: this.gameObj}) ) {
+  			this.targetHiglighter.setOff()
+  			this.actorHiglighter.setOn()
+				
+  		} else if (this.game.uiState.isSelectedTarget({target: this.gameObj})) {
+  			this.actorHiglighter.setOff()
+  			this.targetHiglighter.setOn()
+
+  		} else {
+  			this.actorHiglighter.setOff()
+  			this.targetHiglighter.setOff()
+  		}
+  }
 
 	onClick(props) {
 		if (this.game.input.activePointer.leftButton.isDown) {
-			console.log("> Left button click on: " + this.gameObj.getName())
+			console.log("> Left button click on: " + this.gameObj.getName() + " / " + this.gameObj.getId())
 			this.onLMBClick()
 			
 		} else if(this.game.input.activePointer.rightButton.isDown) {
-			console.log("> Right button click on: " + this.gameObj.getName())
+			console.log("> Right button click on: " + this.gameObj.getName() + " / " + this.gameObj.getId())
 			this.onRMBClick()
 
 		} else if(this.game.input.activePointer.middleButton.isDown) {
-			console.log("> Middle button click on: " + this.gameObj.getName())
+			console.log("> Middle button click on: " + this.gameObj.getName() + " / " + this.gameObj.getId())
 			this.onMMBClick()
 		}
 		
 	}
 	
 	onLMBClick(props) {
-			this.higlighter.toggleHighlights()
+		this.game.uiState.setSelectedTarget({target: this.gameObj})
 	}
 
 	onRMBClick(props) {

@@ -10,8 +10,5 @@ export default class TerrainObject extends MapObject {
   }
 
 
-	onLMBClick(props) {
-			this.higlighter.toggleHighlights()
-	}
 	
 }

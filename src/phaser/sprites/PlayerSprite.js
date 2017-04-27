@@ -13,6 +13,7 @@ export default class Player extends Actor {
 	
 
 	onLMBClick(props) {
+		this.game.uiState.resetSelectedTarget()
 		this.game.uiState.setSelectedActor({actor: this.gameObj})
 	}
 
