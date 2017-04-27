@@ -21,8 +21,11 @@ export default class MapObject extends Phaser.Sprite {
 	init() {
 	}
 
-  update () {
-  }
+  // update () {
+  // 		if ( this.game.uiState.isSelectedActor({actor: this.gameObj}) ) {
+  // 			this.higlighter.highlight()
+  // 		}
+  // }
 
 	onClick(props) {
 		if (this.game.input.activePointer.leftButton.isDown) {

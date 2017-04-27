@@ -20,5 +20,18 @@ export default class UiState {
 		return this.selectedTarget
 	}
 
+	isSelectedActor(props) {
+		let result = false
+		if(props && props.actor.id == this.selectedActor.id) result = true
+			
+		return result
+	}
+
+	isSelectedTarget(props) {
+		let result = false
+		if(props && props.target.id == this.selectedTarget.id) result = true
+			
+		return result
+	}
 
 }

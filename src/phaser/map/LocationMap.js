@@ -49,7 +49,7 @@ export default class LocationMap {
 	
 	init(props) {
 		
-		this.game.uiState.setSelectedActor({actor: this.playerData[0]})
+		this.game.uiState.setSelectedActor({actor: this.playerData[1]})
 		
 		this.mapTerrainGroup = this.game.add.group()
 		this.mapCreaturesGroup = this.game.add.group()
@@ -67,6 +67,15 @@ export default class LocationMap {
 		this.game.world.bringToTop(this.mapCreaturesGroup)
 		this.game.world.bringToTop(this.playerCharGroup)
     this.initMarker()
+	}
+
+	update(props) {
+		this.playerCharGroup.forEach(
+			function(player){
+				player.update()
+			},
+			this
+		)
 	}
 
 	placeTerrain(props) {
