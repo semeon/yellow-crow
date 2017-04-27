@@ -1,6 +1,6 @@
 import {dice} from 'dice'
-import {Actor} from '../world/actor/actor.js'
-import {TerrainObject} from '../world/items/terrainObject.js'
+import {Actor} from '../universe/actor/actor.js'
+import {TerrainObject} from '../universe/items/terrainObject.js'
 
 
 var Chance = require('chance')
@@ -112,6 +112,7 @@ export class Generator {
 		return object
 	}
 
+
 	generateActor(props) {
 		let id
 		if (props && props.id) {
@@ -132,7 +133,7 @@ export class Generator {
 		special.A = dice.rollD10().value
 		special.L = dice.rollD10().value
 		
-		let char = new Actor({id: id, name: props.name, special: special, assetId: props.assetId})
+		let char = new Actor({id: id, name: props.name, control: "ai", special: special, assetId: props.assetId})
 		
 		// char.print({special: true, health: true, attack: true, defense: true})
 		

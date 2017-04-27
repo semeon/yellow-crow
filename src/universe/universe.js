@@ -4,7 +4,7 @@ import {generator} from 'generator'
 // import {Terrain} from './items/terrainObject.js'
 
 
-export class GameWorld {
+export class GameUniverse {
 
 	constructor(props) {
 		this.players = []
@@ -14,11 +14,11 @@ export class GameWorld {
 	}
 	
 	init(props) {
-		let pcGroove = generator.generateActor({name: "Groove", 	assetId: "droid"})
+		let pcGroove = generator.generateActor({name: "Groove", control: "player",	assetId: "droid"})
 		this.players.push(pcGroove)
 		this.playersHash[pcGroove.id] = pcGroove
 
-		let pcMonkeyWrench = generator.generateActor({name: "Monkey Wrench", 	assetId: "droid"})
+		let pcMonkeyWrench = generator.generateActor({name: "Monkey Wrench", control: "player",	assetId: "droid"})
 		this.players.push(pcMonkeyWrench)
 
 		this.selectedPlayer = this.players[0]	
@@ -34,6 +34,10 @@ export class GameWorld {
 	getPlayers(props) {
 		return this.players
 	}	
+
+	setSelectedPlayer(props) {
+		this.selectedPlayer = props.player
+	}
 	
 	printWorld() {
 		console.dir(this.currentLocation)

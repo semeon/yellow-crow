@@ -15,6 +15,7 @@ export class Actor extends GameObject {
 			hpMax: hpMax
 		})
 		this.type = "actor"
+		this.cotrol = props.control
 		this.special = props.special
 		this.hpMax = hpMax
 	}

@@ -1,30 +1,30 @@
 import {logger} from 'logger'
 import {engine} from './engine/engine.js'
-import {GameWorld} from './world/world.js'
+import {GameUniverse} from './universe/universe.js'
 
 class App {
   constructor(props) {
 		this.ge = engine
-		this.world = new GameWorld()
-		this.world.init()
+		this.universe = new GameUniverse()
+		this.universe.init()
 		console.log("App initialized.")
   }	
 	
 	start(props) {
-		this.world.printWorld()
-		this.ge.newSession({world: this.world})
+		this.universe.printWorld()
+		this.ge.newSession({universe: this.universe})
 	}
 
-	getWorld(props) {
-		return this.world
+	getUniverse(props) {
+		return this.universe
 	}
 
 	getCurrentLocation(props) {
-		return this.world.getCurrentLocation()
+		return this.universe.getCurrentLocation()
 	}
 
 	getPlayers(props) {
-		return this.world.getPlayers()
+		return this.universe.getPlayers()
 	}	
 	
 }

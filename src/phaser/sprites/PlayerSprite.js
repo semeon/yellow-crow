@@ -15,6 +15,7 @@ export default class Player extends Actor {
 		// this.highlighter
   }
 	
+
 	// init() {
 	// 	this.highlighter = this.game.add.graphics()
 	//     this.highlighter.kill()
@@ -42,6 +43,9 @@ export default class Player extends Actor {
 	// 	}
 	// }
 
-
+	onLMBClick(props) {
+		this.game.universe.setSelectedPlayer({player: this.gameObj})
+		this.higlighter.highlight()
+	}
 
 }

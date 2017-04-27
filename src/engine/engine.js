@@ -14,7 +14,7 @@ class GameEngine {
 	}
 	
 	newSession(props){
-		this.session = new GameSession({world: props.world, gm: this.master})
+		this.session = new GameSession({universe: props.universe, gm: this.master})
 		this.session.start()
 	}
 
