@@ -2,9 +2,7 @@
 import {app} from 'app'
 import Phaser from 'phaser'
 
-import Mushroom from '../sprites/Mushroom'
-import Actor from '../sprites/ActorSprite'
-import GameObject from '../sprites/GameObjectSprite'
+
 
 export default class extends Phaser.State {
   init () {}

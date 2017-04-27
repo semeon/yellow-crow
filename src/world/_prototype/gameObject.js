@@ -42,3 +42,6 @@ export class GameObject {
   }
 
 }
+
+import {print} from '../../utils/print.js'
+GameObject.prototype.print = print

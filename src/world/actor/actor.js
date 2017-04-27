@@ -46,5 +46,5 @@ Actor.prototype.receiveAttack = CombatActions.receiveAttack
 
 
 // Debug
-import {print} from './print.js'
+import {print} from '../../utils/print.js'
 Actor.prototype.print = print

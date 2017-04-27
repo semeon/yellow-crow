@@ -1,6 +1,8 @@
 import {dice} from 'dice'
 import {Actor} from '../world/actor/actor.js'
 import {TerrainObject} from '../world/items/terrainObject.js'
+
+
 var Chance = require('chance')
 
 export class Generator {

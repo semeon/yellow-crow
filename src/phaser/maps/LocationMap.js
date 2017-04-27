@@ -3,9 +3,11 @@
 import Phaser from 'phaser'
 import {logger} from 'logger'
 import Marker from '../marker/Marker'
+
+import MapObject from '../sprites/MapObjectSprite'
 import Actor from '../sprites/ActorSprite'
 import Player from '../sprites/PlayerSprite'
-import GameObject from '../sprites/GameObjectSprite'
+import TerrainObject from '../sprites/TerrainObjectSprite'
 
 export default class LocationMap {
 
@@ -21,6 +23,9 @@ export default class LocationMap {
 		
 		this.map
 		this.mapObjectsGroup
+		this.mapTerrainGroup
+		this.mapCreaturesGroup
+		this.mapItemsGroup
 		this.playerCharGroup
 		this.layer1
 
@@ -43,24 +48,29 @@ export default class LocationMap {
 	}
 	
 	init(props) {
-		this.mapObjectsGroup = this.game.add.group()
+		this.mapTerrainGroup = this.game.add.group()
+		this.mapCreaturesGroup = this.game.add.group()
+		this.mapItemsGroup = this.game.add.group()
 		this.playerCharGroup = this.game.add.group()
 		
 		this.initMap()
 		
-		this.placeObjects()
+		this.placeTerrain()
+		this.placeCreatures()
 		this.placePlayers()
 		
-		this.game.world.bringToTop(this.mapObjectsGroup)
+
+		this.game.world.bringToTop(this.mapTerrainGroup)
+		this.game.world.bringToTop(this.mapCreaturesGroup)
 		this.game.world.bringToTop(this.playerCharGroup)
     this.initMarker()
 	}
 
-	placeObjects(props) {
-		for (let i=0; i<this.locationData.allObjects.length; i++) {
-			let mapObj = this.locationData.allObjects[i]
+	placeTerrain(props) {
+		for (let i=0; i<this.locationData.terrain.length; i++) {
+			let mapObj = this.locationData.terrain[i]
 
-			let sprite  = new GameObject({
+			let sprite  = new TerrainObject({
 	      game: this.game,
 	      x: mapObj.x * this.tileSize,
 	      y: mapObj.y * this.tileSize,
@@ -69,9 +79,27 @@ export default class LocationMap {
 	    })				
 			sprite.init()
 	    this.game.add.existing(sprite)
-			this.mapObjectsGroup.add(sprite)
+			this.mapTerrainGroup.add(sprite)
 		}
 	}
+
+	placeCreatures(props) {
+		for (let i=0; i<this.locationData.creatures.length; i++) {
+			let mapObj = this.locationData.creatures[i]
+
+			let sprite  = new Actor({
+	      game: this.game,
+	      x: mapObj.x * this.tileSize,
+	      y: mapObj.y * this.tileSize,
+	      asset: mapObj.object.assetId,
+				gameObj: mapObj.object
+	    })				
+			sprite.init()
+	    this.game.add.existing(sprite)
+			this.mapCreaturesGroup.add(sprite)
+		}
+	}
+
 
 	placePlayers(props) {
 		for (let i=0; i<this.playerData.length; i++) {
@@ -86,12 +114,9 @@ export default class LocationMap {
 	    })				
 			sprite.init()
 	    this.game.add.existing(sprite)
-			this.mapObjectsGroup.add(sprite)
 	    this.game.add.existing(sprite)
 			this.playerCharGroup.add(sprite)
 		}
-
-
 	}
 
 	initMap(props) {
