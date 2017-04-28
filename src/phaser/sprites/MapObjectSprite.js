@@ -48,7 +48,19 @@ export default class MapObject extends Phaser.Sprite {
   			this.actorHiglighter.setOff()
   			this.targetHiglighter.setOff()
   		}
+			
+			if (this.gameObj.isDestroyed()) {
+				console.log("> DESTROYED!")
+				this.onDestroy()
+			}
   }
+
+
+	onDestroy() {
+			this.actorHiglighter.destroy()
+			this.targetHiglighter.destroy()
+			this.destroy()
+	}
 
 	onAttackClick() {
 		if ( !this.game.uiState.isSelectedActor({actor: this.gameObj}) ) {
@@ -63,15 +75,17 @@ export default class MapObject extends Phaser.Sprite {
 
 	onClick(props) {
 		if (this.game.input.activePointer.leftButton.isDown) {
-			console.log("> Left button click on: " + this.gameObj.getName() + " / " + this.gameObj.getId())
+			console.log("> LMB click on: " + 
+											this.gameObj.getName() + " (" + this.gameObj.getId() + ") " + 
+											this.gameObj.getHp() + "/" + this.gameObj.getHpMax())
 			this.onLMBClick()
 			
 		} else if(this.game.input.activePointer.rightButton.isDown) {
-			console.log("> Right button click on: " + this.gameObj.getName() + " / " + this.gameObj.getId())
+			console.log("> RMB click on: " + this.gameObj.getName() + " / " + this.gameObj.getId())
 			this.onRMBClick()
 
 		} else if(this.game.input.activePointer.middleButton.isDown) {
-			console.log("> Middle button click on: " + this.gameObj.getName() + " / " + this.gameObj.getId())
+			console.log("> MMB click on: " + this.gameObj.getName() + " / " + this.gameObj.getId())
 			this.onMMBClick()
 		}
 		

@@ -28,6 +28,13 @@ export class GameObject {
 		return this.hpMax
 	}
 
+	isDestroyed () {
+		let result = this.destructable && this.hp<=0
+		
+		return result
+		
+	}
+
   increaseHP(props) {
     if ( (this.hp + props.d) >= this.hpMax ) {
       this.hp = this.hpMax

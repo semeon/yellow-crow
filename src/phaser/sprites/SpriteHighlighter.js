@@ -25,6 +25,11 @@ export default class SpriteHighlighter {
 		this.isOn = false
 	}
 
+	destroy() {
+    this.highlighter.destroy()
+		delete this
+	}
+
 	toggleHighlights(props) {
 		if(!this.isOn) {
 			this.setOn()
