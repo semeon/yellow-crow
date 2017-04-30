@@ -2,6 +2,9 @@
 
 import Phaser from 'phaser'
 import {logger} from 'logger'
+
+import PathFinder from './PathFinder'
+
 import Marker from '../marker/Marker'
 
 import MapObject from '../sprites/MapObjectSprite'
@@ -20,6 +23,8 @@ export default class LocationMap {
 		this.tileSize = props.tile
 		this.width = props.data.width
 		this.height = props.data.height
+
+		this.pathFinder = new PathFinder({width: this.width, height: this.height})
 		
 		this.map
 		this.mapObjectsGroup
@@ -66,7 +71,7 @@ export default class LocationMap {
 		this.game.world.bringToTop(this.mapTerrainGroup)
 		this.game.world.bringToTop(this.mapCreaturesGroup)
 		this.game.world.bringToTop(this.playerCharGroup)
-    this.initMarker()
+		this.marker.init()
 	}
 
 	update(props) {
@@ -152,25 +157,12 @@ export default class LocationMap {
 
 		this.game.input.addMoveCallback(this.updateMarker, this)
 		this.game.input.onDown.add(this.onTileClick, this)
+		
+		this.pathFinder.buildGrid()
 	}
 
 
-	initMarker(props) {
-    // this.marker = this.game.add.graphics()
-    // this.marker.lineStyle(1, 0x000000, 1)
-    // this.marker.drawRect(0, 0, this.tileSize, this.tileSize)
 
-    // this.marker = this.game.add.graphics()
-    // this.marker.lineStyle(1, 0x000000, 1)
-    // this.marker.drawRoundedRect(0, 0, this.tileSize, this.tileSize, 5)
-
-		// let tileMarker = this.game.add.sprite(0, 0, 'marker_tile')
-		// this.marker = this.game.add.group(tileMarker)
-
-		this.marker.init()
-
-	}
-	
 	updateMarker() {
 	    // this.marker.x = this.currentLayer.getTileX(this.game.input.activePointer.worldX) * this.tileSize
 	    // this.marker.y = this.currentLayer.getTileY(this.game.input.activePointer.worldY) * this.tileSize
@@ -183,7 +175,10 @@ export default class LocationMap {
 	}
 
 	onTileClick() {
-		console.log("----- Tile click: " + this.currentLayer.getTileX(this.game.input.activePointer.worldX) + ":" + this.currentLayer.getTileY(this.game.input.activePointer.worldY))
+		let tileX = this.currentLayer.getTileX(this.game.input.activePointer.worldX)
+		let tileY = this.currentLayer.getTileY(this.game.input.activePointer.worldY)
+		console.log("----- Tile click: " + tileX + ":" + tileY)
+		this.pathFinder.find({destX: tileX, destY: tileY})
 	}
 	
 }

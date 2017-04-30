@@ -28,7 +28,7 @@ export class GameObject {
 		return this.hpMax
 	}
 
-	isDestroyed () {
+	isDestroyed() {
 		let result = this.destructable && this.hp<=0
 		
 		return result
