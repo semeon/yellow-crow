@@ -11,10 +11,13 @@ export default class Player extends Actor {
 		// this.highlighter
   }
 	
+	select() {
+		this.game.uiState.setSelectedActor({actor: this.gameObj, sprite: this})
+	}
 
 	onLMBClick(props) {
 		this.game.uiState.resetSelectedTarget()
-		this.game.uiState.setSelectedActor({actor: this.gameObj})
+		this.select()
 	}
 
 }

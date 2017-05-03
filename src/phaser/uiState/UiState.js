@@ -1,28 +1,44 @@
 export default class UiState {
   constructor (props) {
 		this.selectedActor
+		this.selectedActorSprite
+
 		this.selectedTarget
+		this.selectedTargetSprite
+		
   }
 
 	setSelectedActor(props) {
 		this.selectedActor = props.actor
-	}
+		this.selectedActorSprite = props.sprite
 
+	}
 	setSelectedTarget(props) {
 		this.selectedTarget = props.target
+		this.selectedTargetSprite = props.sprite
 	}
 
 	resetSelectedTarget(props) {
 		this.selectedTarget = null
+		this.selectedTargetSprite = null
 	}
+
 
 	getSelectedActor(props) {
 		return this.selectedActor
 	}
+	getSelectedActorSprite(props) {
+		return this.selectedActorSprite
+	}
+
 
 	getSelectedTarget(props) {
 		return this.selectedTarget
 	}
+	getSelectedTargetSprite(props) {
+		return this.selectedTargetSprite
+	}
+
 
 	isSelectedActor(props) {
 		let result = false

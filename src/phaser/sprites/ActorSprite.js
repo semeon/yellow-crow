@@ -3,7 +3,7 @@ import MapObject from './MapObjectSprite'
 
 export default class Actor extends MapObject {
   constructor (props) {
-		if(!props.higlightColor) props.higlightColor =  0xdd0000
+		if(!props.higlightColor) props.higlightColor =  0xffff00
     super(props)
   }
 

@@ -11,6 +11,8 @@ export class GameObject {
 		this.hpMax = props.hpMax
 		this.hp = this.hpMax
 		this.destructable = true
+		
+		this.sprite
 	}
 
 	getId() {

@@ -3,9 +3,8 @@
 import Phaser from 'phaser'
 import {logger} from 'logger'
 
-import PathFinder from './PathFinder'
-
 import Marker from '../marker/Marker'
+import Path from '../path/Path'
 
 import MapObject from '../sprites/MapObjectSprite'
 import Actor from '../sprites/ActorSprite'
@@ -24,8 +23,6 @@ export default class LocationMap {
 		this.width = props.data.width
 		this.height = props.data.height
 
-		this.pathFinder = new PathFinder({width: this.width, height: this.height})
-		
 		this.map
 		this.mapObjectsGroup
 		this.mapTerrainGroup
@@ -35,6 +32,7 @@ export default class LocationMap {
 		this.layer1
 
 		this.marker = new Marker({game: props.game})
+		this.path = new Path({game: props.game, tileSize: props.tile})
 		this.currentLayer
 	}
 	
@@ -44,7 +42,6 @@ export default class LocationMap {
 
     this.game.load.image('marker_move', 'assets/images/markers/marker_01.png')
     this.game.load.image('marker_move_info', 'assets/images/markers/marker_01_info.png')
-
 		
     this.game.load.image('desert_sand', 'assets/images/desert/desert_sand_32x32.png')	
     this.game.load.image('desert_bush_01', 'assets/images/desert/desert_bush_01.png')	
@@ -54,24 +51,26 @@ export default class LocationMap {
 	
 	init(props) {
 		
-		this.game.uiState.setSelectedActor({actor: this.playerData[1]})
+		// this.game.uiState.setSelectedActor({actor: this.playerData[1]})
 		
 		this.mapTerrainGroup = this.game.add.group()
 		this.mapCreaturesGroup = this.game.add.group()
 		this.mapItemsGroup = this.game.add.group()
 		this.playerCharGroup = this.game.add.group()
+
 		
 		this.initMap()
 		
 		this.placeTerrain()
 		this.placeCreatures()
 		this.placePlayers()
-		
 
 		this.game.world.bringToTop(this.mapTerrainGroup)
 		this.game.world.bringToTop(this.mapCreaturesGroup)
 		this.game.world.bringToTop(this.playerCharGroup)
+
 		this.marker.init()
+		this.path.init({map: this}) 
 	}
 
 	update(props) {
@@ -117,7 +116,6 @@ export default class LocationMap {
 		}
 	}
 
-
 	placePlayers(props) {
 		for (let i=0; i<this.playerData.length; i++) {
 			let pc = this.playerData[i]
@@ -130,11 +128,13 @@ export default class LocationMap {
 				gameObj: pc
 	    })				
 			sprite.init()
+			if (i==0) sprite.select()
 	    this.game.add.existing(sprite)
 	    this.game.add.existing(sprite)
 			this.playerCharGroup.add(sprite)
 		}
 	}
+
 
 	initMap(props) {
     let data = ""
@@ -157,8 +157,6 @@ export default class LocationMap {
 
 		this.game.input.addMoveCallback(this.updateMarker, this)
 		this.game.input.onDown.add(this.onTileClick, this)
-		
-		this.pathFinder.buildGrid()
 	}
 
 
@@ -178,7 +176,14 @@ export default class LocationMap {
 		let tileX = this.currentLayer.getTileX(this.game.input.activePointer.worldX)
 		let tileY = this.currentLayer.getTileY(this.game.input.activePointer.worldY)
 		console.log("----- Tile click: " + tileX + ":" + tileY)
-		this.pathFinder.find({destX: tileX, destY: tileY})
+		
+		let startX = this.currentLayer.getTileX(this.game.uiState.getSelectedActorSprite().x)
+		let startY = this.currentLayer.getTileY(this.game.uiState.getSelectedActorSprite().y)
+		
+		
+		console.log("----- Selected player: " + startX + ":" + startY)
+		this.path.build({startX: startX, startY: startY, destX: tileX, destY: tileY})
+		this.path.draw()
 	}
 	
 }
