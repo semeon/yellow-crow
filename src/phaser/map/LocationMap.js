@@ -28,11 +28,11 @@ export default class LocationMap {
 		this.mapTerrainGroup
 		this.mapCreaturesGroup
 		this.mapItemsGroup
+		this.playerCharGroup
 
 		this.mapMatrixHash
 		this.mapMatrix
 
-		this.playerCharGroup
 		this.layer1
 		this.currentLayer
 
@@ -78,13 +78,36 @@ export default class LocationMap {
 		this.path.init({map: this, matrix: this.mapMatrix}) 
 	}
 
+	initMap(props) {
+    let data = ""
+    for (var y = 0; y < this.height; y++) {
+      for (var x = 0; x < this.width; x++)  {
+        data += this.game.rnd.between(0, 3).toString()
+        if (x < this.width-1) data += ','
+      }
+      if (y < this.height-1)  data += "\n"
+    }
+    // console.log(data)
+		this.game.cache.addTilemap('dynamicMap', null, data, Phaser.Tilemap.CSV)
+
+    this.map = this.game.add.tilemap('dynamicMap', this.tileSize, this.tileSize)
+    this.map.addTilesetImage('grass', 'grass', this.tileSize, this.tileSize)
+
+    this.layer1 = this.map.createLayer(0)
+    this.layer1.resizeWorld()
+		this.currentLayer = this.layer1
+
+		this.game.input.addMoveCallback(this.updateMarker, this)
+		this.game.input.onDown.add(this.onTileClick, this)
+	}
+
 	update(props) {
-		this.playerCharGroup.forEach(
-			function(player){
-				player.update()
-			},
-			this
-		)
+		// this.playerCharGroup.forEach(
+		// 	function(player){
+		// 		player.update()
+		// 	},
+		// 	this
+		// )
 	}
 
 	placeTerrain(props) {
@@ -193,28 +216,7 @@ export default class LocationMap {
 	
 
 
-	initMap(props) {
-    let data = ""
-    for (var y = 0; y < this.height; y++) {
-      for (var x = 0; x < this.width; x++)  {
-        data += this.game.rnd.between(0, 3).toString()
-        if (x < this.width-1) data += ','
-      }
-      if (y < this.height-1)  data += "\n"
-    }
-    // console.log(data)
-		this.game.cache.addTilemap('dynamicMap', null, data, Phaser.Tilemap.CSV)
 
-    this.map = this.game.add.tilemap('dynamicMap', this.tileSize, this.tileSize)
-    this.map.addTilesetImage('grass', 'grass', this.tileSize, this.tileSize)
-
-    this.layer1 = this.map.createLayer(0)
-    this.layer1.resizeWorld()
-		this.currentLayer = this.layer1
-
-		this.game.input.addMoveCallback(this.updateMarker, this)
-		this.game.input.onDown.add(this.onTileClick, this)
-	}
 
 
 
@@ -242,7 +244,7 @@ export default class LocationMap {
 		let tileY = this.currentLayer.getTileY(this.game.input.activePointer.worldY)
 		let tileObjects = this.getTileObjects({x: tileX, y: tileY})
 
-		console.log("----- Tile click: " + tileX + ":" + tileY + ". Obects:")
+		console.log("----- Tile click: " + tileX + ":" + tileY + ". Objects:")
 		console.dir(tileObjects)
 		
 		let startX = this.currentLayer.getTileX(this.game.uiState.getSelectedActorSprite().x)
