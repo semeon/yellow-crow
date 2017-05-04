@@ -14,6 +14,9 @@ export default class MapObject extends Phaser.Sprite {
 		this.inputEnabled = true
 		this.events.onInputDown.add(this.onClick, this)
 		this.tileSize = props.game.locationMap.tileSize
+		
+		this.tileX = props.tileX
+		this.tileY = props.tileY
 
 		this.actorHiglighter = new SpriteHighlighter({game: this.game, parent: this, colour: props.higlightColor})
 		this.targetHiglighter = new SpriteHighlighter({game: this.game, parent: this, colour: 0xdd0000})

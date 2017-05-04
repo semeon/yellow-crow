@@ -16,7 +16,9 @@ export default class Pathfinder {
   }
 	
 	buildGrid(props) {
-		this.grid = new PF.Grid(this.width, this.height)
+		console.log("BUILD")
+		console.dir(props.matrix)
+		this.grid = new PF.Grid(props.matrix)
 	}
 	
 	find(props) {

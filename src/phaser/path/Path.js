@@ -9,16 +9,7 @@ export default class PathMarker {
 		this.isOn = false
 		this.colour = "0xffff00"
 		this.tileSize = props.tileSize
-		// this.path = props.path
-		this.path = [
-			[0, 0],
-			[1, 0],
-			[2, 0],
-			[3, 1],
-			[3, 2],
-			[3, 3],
-			[3, 4]
-		]
+
 
 
 		this.pathMarker
@@ -27,20 +18,21 @@ export default class PathMarker {
 
 	init(props) {
 		this.pathMarkerGroup = this.game.add.group()
-		this.pathFinder = new PathFinder({width: props.map.width, height: props.map.height, data: null})
-		this.pathFinder.buildGrid()
+		this.pathFinder = new PathFinder({width: props.map.width, height: props.map.height, data: props.matrix})
+		this.pathFinder.buildGrid({matrix: props.matrix})
 	}
 
 	build(props) {
+		this.pathFinder.buildGrid({matrix: props.matrix})
 		this.path = this.pathFinder.find(props)
 	}
 
-	destroy() {
+	clear() {
 		this.pathMarkerGroup.removeAll(true)
 	}
 
 	draw(props) {
-		this.destroy()
+		this.clear()
 
 		for(let i=0; i<this.path.length; i++) {
 			

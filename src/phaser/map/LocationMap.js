@@ -28,12 +28,18 @@ export default class LocationMap {
 		this.mapTerrainGroup
 		this.mapCreaturesGroup
 		this.mapItemsGroup
+
+		this.mapMatrixHash
+		this.mapMatrix
+
 		this.playerCharGroup
 		this.layer1
+		this.currentLayer
+
+
 
 		this.marker = new Marker({game: props.game})
 		this.path = new Path({game: props.game, tileSize: props.tile})
-		this.currentLayer
 	}
 	
 	preload(props) {
@@ -51,12 +57,12 @@ export default class LocationMap {
 	
 	init(props) {
 		
-		// this.game.uiState.setSelectedActor({actor: this.playerData[1]})
-		
 		this.mapTerrainGroup = this.game.add.group()
 		this.mapCreaturesGroup = this.game.add.group()
 		this.mapItemsGroup = this.game.add.group()
 		this.playerCharGroup = this.game.add.group()
+
+		this.allObstacles = this.game.add.group()
 
 		
 		this.initMap()
@@ -64,13 +70,12 @@ export default class LocationMap {
 		this.placeTerrain()
 		this.placeCreatures()
 		this.placePlayers()
+		this.updateMatrix()
 
-		this.game.world.bringToTop(this.mapTerrainGroup)
-		this.game.world.bringToTop(this.mapCreaturesGroup)
-		this.game.world.bringToTop(this.playerCharGroup)
+		this.game.world.bringToTop(this.allObstacles)
 
 		this.marker.init()
-		this.path.init({map: this}) 
+		this.path.init({map: this, matrix: this.mapMatrix}) 
 	}
 
 	update(props) {
@@ -90,12 +95,15 @@ export default class LocationMap {
 	      game: this.game,
 	      x: mapObj.x * this.tileSize,
 	      y: mapObj.y * this.tileSize,
+				tileX: mapObj.x,
+				tileY: mapObj.y,
 	      asset: mapObj.object.assetId,
 				gameObj: mapObj.object
 	    })				
 			sprite.init()
 	    this.game.add.existing(sprite)
 			this.mapTerrainGroup.add(sprite)
+			this.allObstacles.add(sprite)
 		}
 	}
 
@@ -107,12 +115,15 @@ export default class LocationMap {
 	      game: this.game,
 	      x: mapObj.x * this.tileSize,
 	      y: mapObj.y * this.tileSize,
+				tileX: mapObj.x,
+				tileY: mapObj.y,
 	      asset: mapObj.object.assetId,
 				gameObj: mapObj.object
 	    })				
 			sprite.init()
 	    this.game.add.existing(sprite)
 			this.mapCreaturesGroup.add(sprite)
+			this.allObstacles.add(sprite)
 		}
 	}
 
@@ -124,6 +135,8 @@ export default class LocationMap {
 	      game: this.game,
 	      x: 1 * this.tileSize,
 	      y: (3 + i*2) * this.tileSize,
+				tileX: 1,
+				tileY: 3 + i*2,
 	      asset: pc.assetId,
 				gameObj: pc
 	    })				
@@ -132,8 +145,52 @@ export default class LocationMap {
 	    this.game.add.existing(sprite)
 	    this.game.add.existing(sprite)
 			this.playerCharGroup.add(sprite)
+			this.allObstacles.add(sprite)
 		}
 	}
+
+
+	updateMatrix() {
+		
+		delete this.mapMatrixHash
+		
+		this.mapMatrixHash = null
+
+		this.mapMatrixHash = {}
+
+		for (let i=0; i<this.allObstacles.children.length; i++) {
+			let mapObj = this.allObstacles.children[i]
+			
+			
+			let x = mapObj.tileX
+			let y = mapObj.tileY
+
+			if (!this.mapMatrixHash[x]) this.mapMatrixHash[x] = {}
+			if (!this.mapMatrixHash[x][y]) this.mapMatrixHash[x][y] = []
+
+			this.mapMatrixHash[x][y].push(mapObj.obj)
+		}
+
+		console.log("updateMatrix()")
+		this.mapMatrix = []
+
+		console.dir(this.mapMatrix)
+
+
+		for (let y=0; y<this.height; y++) {
+			let row = []
+			this.mapMatrix.push(row)
+			for (let x=0; x<this.width; x++) {
+				if (this.getTileObjects({x: x, y: y}).length > 0) {
+					this.mapMatrix[y].push(1)
+				} else {
+					this.mapMatrix[y].push(0)
+				}
+			}
+		}
+		console.dir(this.mapMatrix)
+	}
+	
 
 
 	initMap(props) {
@@ -172,18 +229,40 @@ export default class LocationMap {
 		
 	}
 
+	getTileObjects(props) {
+		let result = []
+		if (this.mapMatrixHash && this.mapMatrixHash[props.x] && this.mapMatrixHash[props.x][props.y]) result = this.mapMatrixHash[props.x][props.y]
+		return result			
+	}
+
 	onTileClick() {
+		this.updateMatrix()
+
 		let tileX = this.currentLayer.getTileX(this.game.input.activePointer.worldX)
 		let tileY = this.currentLayer.getTileY(this.game.input.activePointer.worldY)
-		console.log("----- Tile click: " + tileX + ":" + tileY)
+		let tileObjects = this.getTileObjects({x: tileX, y: tileY})
+
+		console.log("----- Tile click: " + tileX + ":" + tileY + ". Obects:")
+		console.dir(tileObjects)
 		
 		let startX = this.currentLayer.getTileX(this.game.uiState.getSelectedActorSprite().x)
 		let startY = this.currentLayer.getTileY(this.game.uiState.getSelectedActorSprite().y)
-		
-		
 		console.log("----- Selected player: " + startX + ":" + startY)
-		this.path.build({startX: startX, startY: startY, destX: tileX, destY: tileY})
-		this.path.draw()
+
+		this.path.clear()
+
+		// Empty tile click
+		if (tileObjects.length == 0) {
+			
+			this.path.build({startX: startX, startY: startY, destX: tileX, destY: tileY, matrix:this.mapMatrix})
+			this.path.draw()
+
+		// Object click
+		} else {
+
+		}
+
+
 	}
 	
 }
