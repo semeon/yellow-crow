@@ -9,11 +9,9 @@ export default class PathMarker {
 		this.isOn = false
 		this.colour = "0xffff00"
 		this.tileSize = props.tileSize
-
-
-
 		this.pathMarker
 		this.markersGroup
+
   }
 
 	init(props) {
@@ -33,7 +31,6 @@ export default class PathMarker {
 
 	draw(props) {
 		this.clear()
-
 		for(let i=0; i<this.path.length; i++) {
 			
 			if (i == 0) continue

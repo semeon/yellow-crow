@@ -9,7 +9,7 @@ export class GameSession {
 		this.master = props.gm
 	}
 	
-	start(){
+	start() {
 		console.log("Starting new game session..")
 		let location = this.universe.getCurrentLocation()
 		this.master.init({location: location})

@@ -10,6 +10,8 @@ import GameState from './states/Game'
 import config from './config'
 
 import LocationMap from './map/LocationMap'
+import Board from './board/TileBoard'
+
 import UiState from './uiState/UiState'
 
 export default class PhaserUI extends Phaser.Game {
@@ -25,13 +27,20 @@ export default class PhaserUI extends Phaser.Game {
 		
 		this.gm = app.getGM()
 		this.uiState = new UiState()
+
+		this.locationMap = new Board({game: this,
+														data: locationData,
+														width: locationData.width,
+														height: locationData.height,
+														playerData: playerData})
+
 		
-		this.locationMap = new LocationMap({game: this, 
-																				data: locationData, 
-																				tile: 32, 
-																				width: locationData.width, 
-																				height: locationData.height, 
-																				playerData: playerData})
+		// this.locationMap = new LocationMap({game: this,
+		// 																		data: locationData,
+		// 																		tile: 32,
+		// 																		width: locationData.width,
+		// 																		height: locationData.height,
+		// 																		playerData: playerData})
 
     this.state.add('Boot', BootState, false)
     this.state.add('Splash', SplashState, false)

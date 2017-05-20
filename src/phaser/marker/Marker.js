@@ -3,7 +3,8 @@ export default class Marker {
 
 	constructor(props) {
 		this.game = props.game
-
+		this.board = props.board
+		
 		this.x = 0
 		this.y = 0
 		
@@ -21,6 +22,17 @@ export default class Marker {
 		this.game.world.bringToTop(this.group)
 		
 	}
+
+	update(props) {
+    // this.marker.x = this.currentLayer.getTileX(this.game.input.activePointer.worldX) * this.tileSize
+    // this.marker.y = this.currentLayer.getTileY(this.game.input.activePointer.worldY) * this.tileSize
+	
+		this.moveTo({
+				x: this.board.currentLayer.getTileX(this.game.input.activePointer.worldX) * this.board.tileSize,
+				y: this.board.currentLayer.getTileY(this.game.input.activePointer.worldY) * this.board.tileSize
+		})		
+	}
+
 	
 	moveTo(props) {
 		this.x = props.x
