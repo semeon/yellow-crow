@@ -1,4 +1,7 @@
 export function preload(props) {
+
+  this.game.load.image('tile', './assets/images/3d/tile.png');
+
 	this.game.load.image('grass', 'assets/images/ground_4_32x32.png')
   this.game.load.image('droid', 'assets/images/droid_32x32.png')
 

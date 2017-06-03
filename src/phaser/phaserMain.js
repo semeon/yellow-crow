@@ -1,7 +1,9 @@
 import {app} from 'app'
 import 'pixi'
 import 'p2'
-import Phaser from 'phaser'
+import 'phaserIso'
+
+// import Phaser from 'phaser'
 
 import BootState from './states/Boot'
 import SplashState from './states/Splash'
@@ -34,19 +36,16 @@ export default class PhaserUI extends Phaser.Game {
 														height: locationData.height,
 														playerData: playerData})
 
-		
-		// this.locationMap = new LocationMap({game: this,
-		// 																		data: locationData,
-		// 																		tile: 32,
-		// 																		width: locationData.width,
-		// 																		height: locationData.height,
-		// 																		playerData: playerData})
 
+  }
+	
+	init() {
     this.state.add('Boot', BootState, false)
     this.state.add('Splash', SplashState, false)
     this.state.add('Game', GameState, false)
-
+	}
+	
+	start() {
     this.state.start('Boot')
-  }
+	}
 }
-
