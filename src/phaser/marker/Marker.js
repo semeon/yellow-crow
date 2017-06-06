@@ -24,33 +24,21 @@ export default class Marker {
 	}
 
 	update(props) {
-    // this.marker.x = this.currentLayer.getTileX(this.game.input.activePointer.worldX) * this.tileSize
-    // this.marker.y = this.currentLayer.getTileY(this.game.input.activePointer.worldY) * this.tileSize
 		this.game.iso.unproject(this.game.input.activePointer.position, this.board.cursorPos)
-
 		let x = this.board.cursorPos.x - ( this.board.cursorPos.x % this.board.tileSize )
 		let y = this.board.cursorPos.y - ( this.board.cursorPos.y % this.board.tileSize )
-	
 		this.moveTo({
 				x: x,
 				y: y
-		})		
+		})
 	}
 
-	
 	moveTo(props) {
-		
-		this.x = props.x
-		this.y = props.y
-		for (let i in this.currentMarker) {
-			let item = this.currentMarker[i]
-			
-			item.object.isoX = props.x + item.offsetX
-			item.object.isoY = props.y + item.offsetY
-		}
+		this.currentMarker.isoX = props.x
+		this.currentMarker.isoY = props.y
 	}
 
-	changeTo(props) {
+	changeType(props) {
 		
 	}
 
@@ -58,22 +46,18 @@ export default class Marker {
 
 		let destMarker = {}
 
-		destMarker.frame = {}
-		destMarker.frame.offsetX = 0
-		destMarker.frame.offsetY = 0
-		destMarker.frame.object = this.game.add.isoSprite(this.x+destMarker.frame.offsetX, this.y+destMarker.frame.offsetX, 0, 'marker_move', 0)
-		destMarker.frame.object.anchor.set(0.5, 0)
-		this.group.add(destMarker.frame.object)
+		destMarker = this.game.add.isoSprite(this.x, this.y, 0, 'marker_move', 0)
+		destMarker.anchor.set(0.5, 0)
+		this.group.add(destMarker)
+		
+		let infoPlate = this.game.add.graphics()
+		infoPlate.beginFill(0xffff00)
+    infoPlate.drawRect(this.board.tileSize/2, 0, 24, 10) 
+		infoPlate.endFill()
 
-		destMarker.info = {}
-		destMarker.info.offsetX = 0
-		destMarker.info.offsetY = 0
-		destMarker.info.object = this.game.add.isoSprite(this.x+destMarker.info.offsetX, this.y+destMarker.info.offsetY, 0, 'marker_move_info', 0)
-		destMarker.info.object.anchor.set(-0.5, 0)
-		this.group.add(destMarker.info.object)
 
 		let text = this.game.add.text(
-			this.board.tileSize / 2,
+			this.board.tileSize/2 + 1,
 			0,
 			"AP:12",
 			{
@@ -82,8 +66,9 @@ export default class Marker {
         align: "left"
 			}
 		)
-		
-		destMarker.info.object.addChild(text)
+
+		infoPlate.addChild(text)
+  	destMarker.addChild(infoPlate)
 
 		return destMarker
 	}
