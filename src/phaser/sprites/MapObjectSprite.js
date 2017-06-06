@@ -1,26 +1,31 @@
 import Phaser from 'phaser'
 import SpriteHighlighter from './SpriteHighlighter'
 
-export default class MapObject extends Phaser.Sprite {
+export default class MapObject {
   constructor (props) {
 		let higlightColor = 0x000000
 		if (props.higlightColor) higlightColor = props.higlightColor
 
-    super(props.game, props.x, props.y, props.asset)
+    // super(props.game, props.x, props.y, props.asset)
 
 		this.game = props.game
-
 		this.gameObj = props.gameObj
+
+
 		this.inputEnabled = true
-		this.events.onInputDown.add(this.onClick, this)
 		this.tileSize = props.game.locationMap.tileSize
 		
 		this.tileX = props.tileX
 		this.tileY = props.tileY
 
+		this.sprite = this.game.add.isoSprite(props.x, props.y, 0, props.asset, 0)
+			
+    this.sprite.anchor.set(0.5, 0.15)
+
 		this.actorHiglighter = new SpriteHighlighter({game: this.game, parent: this, colour: props.higlightColor})
 		this.targetHiglighter = new SpriteHighlighter({game: this.game, parent: this, colour: 0xdd0000})
 
+		this.sprite.events.onInputDown.add(this.onClick, this)
   }
 
 

@@ -48,8 +48,8 @@ export class Generator {
 			id += this.getCount()
 		}
 		
-		let height = 16
-		let width = 24
+		let height = 10
+		let width = 10
 		let name = chance.city()
 
 		let allObjects = []

@@ -4,11 +4,31 @@ import Player from '../sprites/PlayerSprite'
 import TerrainObject from '../sprites/TerrainObjectSprite'
 
 
+export function placeTiles(props) {
+
+	for (let tileX=0; tileX<this.width; tileX++) {
+		for (let tileY=0; tileY<this.height; tileY++) {
+			let tileOblject  = new MapObject({
+	      game: this.game,
+	      x: tileX * this.tileSize,
+	      y: tileY * this.tileSize,
+				tileX: tileX,
+				tileY: tileY,
+	      asset: 'tile',
+				gameObj: null				
+	    })
+	    tileOblject.sprite.anchor.set(0.5, 0)
+			tileOblject.init()
+	    this.game.add.existing(tileOblject.sprite)
+		}
+	}
+}
+
 export function placeTerrain(props) {
 	for (let i=0; i<this.locationData.terrain.length; i++) {
 		let mapObj = this.locationData.terrain[i]
 
-		let sprite  = new TerrainObject({
+		let terrainObject  = new TerrainObject({
       game: this.game,
       x: mapObj.x * this.tileSize,
       y: mapObj.y * this.tileSize,
@@ -16,19 +36,20 @@ export function placeTerrain(props) {
 			tileY: mapObj.y,
       asset: mapObj.object.assetId,
 			gameObj: mapObj.object
-    })				
-		sprite.init()
-    this.game.add.existing(sprite)
-		this.mapTerrainGroup.add(sprite)
-		this.allObstacles.add(sprite)
+    })
+		terrainObject.init()
+    this.game.add.existing(terrainObject.sprite)
+		this.mapTerrainGroup.add(terrainObject.sprite)
+		this.allObstacles.add(terrainObject.sprite)
 	}
 }
+
 
 export function placeCreatures(props) {
 	for (let i=0; i<this.locationData.creatures.length; i++) {
 		let mapObj = this.locationData.creatures[i]
 
-		let sprite  = new Actor({
+		let actorObject  = new Actor({
       game: this.game,
       x: mapObj.x * this.tileSize,
       y: mapObj.y * this.tileSize,
@@ -37,18 +58,19 @@ export function placeCreatures(props) {
       asset: mapObj.object.assetId,
 			gameObj: mapObj.object
     })				
-		sprite.init()
-    this.game.add.existing(sprite)
-		this.mapCreaturesGroup.add(sprite)
-		this.allObstacles.add(sprite)
+		actorObject.init()
+    this.game.add.existing(actorObject.sprite)
+		this.mapCreaturesGroup.add(actorObject.sprite)
+		this.allObstacles.add(actorObject.sprite)
 	}
 }
+
 
 export function placePlayers(props) {
 	for (let i=0; i<this.playerData.length; i++) {
 		let pc = this.playerData[i]
 
-		let sprite  = new Player({
+		let playerObject  = new Player({
       game: this.game,
       x: 1 * this.tileSize,
       y: (3 + i*2) * this.tileSize,
@@ -57,11 +79,11 @@ export function placePlayers(props) {
       asset: pc.assetId,
 			gameObj: pc
     })				
-		sprite.init()
-		if (i==0) sprite.select()
-    this.game.add.existing(sprite)
-    this.game.add.existing(sprite)
-		this.playerCharGroup.add(sprite)
-		this.allObstacles.add(sprite)
+		playerObject.init()
+		if (i==0) playerObject.select()
+    this.game.add.existing(playerObject.sprite)
+    this.game.add.existing(playerObject.sprite)
+		this.playerCharGroup.add(playerObject.sprite)
+		this.allObstacles.add(playerObject.sprite)
 	}
 }

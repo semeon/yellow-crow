@@ -6,8 +6,9 @@ import {logger} from 'logger'
 import Marker from '../marker/Marker'
 import Path from '../path/Path'
 
-const TILE_WIDTH = 32
-const TILE_HEIGHT = 32
+const TILE_WIDTH = 38
+const TILE_HEIGHT = 38
+
 
 export default class TileBoard {
 
@@ -18,6 +19,7 @@ export default class TileBoard {
 		this.playerData = props.playerData
 
 		this.tileSize = TILE_WIDTH
+
 		this.width = props.data.width
 		this.height = props.data.height
 
@@ -48,17 +50,18 @@ export default class TileBoard {
 		
 		this.marker = new Marker({game: this.game, board: this})
 		this.path = new Path({game: this.game, tileSize: this.tileSize})
-		this.initTileMap()
+		// this.initTileMap()
 		
+		this.placeTiles()
 		this.placeTerrain()
 		this.placeCreatures()
 		this.placePlayers()
-		this.updateMatrix()
+		// this.updateMatrix()
 
 		this.game.world.bringToTop(this.allObstacles)
 
-		this.marker.init()
-		this.path.init({map: this, matrix: this.mapMatrix}) 
+		// this.marker.init()
+		// this.path.init({map: this, matrix: this.mapMatrix})
 	}
 
 	initTileMap(props) {
@@ -71,13 +74,13 @@ export default class TileBoard {
       if (y < this.height-1)  data += "\n"
     }
     // console.log(data)
-		this.game.cache.addTilemap('dynamicMap', null, data, Phaser.Tilemap.CSV)
+		// this.game.cache.addTilemap('dynamicMap', null, data, Phaser.Tilemap.CSV)
 
-    this.map = this.game.add.tilemap('dynamicMap', this.tileSize, this.tileSize)
-    this.map.addTilesetImage('grass', 'grass', this.tileSize, this.tileSize)
-
-    this.layer1 = this.map.createLayer(0)
-    this.layer1.resizeWorld()
+    // this.map = this.game.add.tilemap('dynamicMap', this.tileSize, this.tileSize)
+    // this.map.addTilesetImage('grass', 'grass', this.tileSize, this.tileSize)
+    //
+    // this.layer1 = this.map.createLayer(0)
+    // this.layer1.resizeWorld()
 		this.currentLayer = this.layer1
 
 		this.game.input.addMoveCallback(function() { this.marker.update() }, this)
@@ -101,10 +104,12 @@ import {preload} from './PreloadAssets.js'
 TileBoard.prototype.preload = preload
 
 // Fill the board
+import {placeTiles} from './FillBoard.js'
 import {placeTerrain} from './FillBoard.js'
 import {placeCreatures} from './FillBoard.js'
 import {placePlayers} from './FillBoard.js'
 
+TileBoard.prototype.placeTiles = placeTiles
 TileBoard.prototype.placeTerrain = placeTerrain
 TileBoard.prototype.placeCreatures = placeCreatures
 TileBoard.prototype.placePlayers = placePlayers
