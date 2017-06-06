@@ -1,5 +1,6 @@
 import MapObject from '../sprites/MapObjectSprite'
 import Actor from '../sprites/ActorSprite'
+import TileObject from '../sprites/TileObject'
 import Player from '../sprites/PlayerSprite'
 import TerrainObject from '../sprites/TerrainObjectSprite'
 
@@ -8,7 +9,7 @@ export function placeTiles(props) {
 
 	for (let tileX=0; tileX<this.width; tileX++) {
 		for (let tileY=0; tileY<this.height; tileY++) {
-			let tileOblject  = new MapObject({
+			let tileOblject  = new TileObject({
 	      game: this.game,
 	      x: tileX * this.tileSize,
 	      y: tileY * this.tileSize,
@@ -17,7 +18,6 @@ export function placeTiles(props) {
 	      asset: 'tile',
 				gameObj: null				
 	    })
-	    tileOblject.sprite.anchor.set(0.5, 0)
 			tileOblject.init()
 	    this.game.add.existing(tileOblject.sprite)
 		}

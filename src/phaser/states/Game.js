@@ -22,7 +22,7 @@ export default class extends Phaser.State {
     // this.spawnTiles()
 
     // Provide a 3D position for the cursor
-    this.cursorPos = new Phaser.Plugin.Isometric.Point3()
+    // this.cursorPos = new Phaser.Plugin.Isometric.Point3()
 
 		this.game.locationMap.init()
   }
@@ -33,24 +33,24 @@ export default class extends Phaser.State {
     // determined from the 2D pointer position without extra trickery. By default, the z position is 0 if not set.
     this.game.iso.unproject(this.game.input.activePointer.position, this.cursorPos);
 
-		let self = this
-
-    // Loop through all tiles and test to see if the 3D position from above intersects with the automatically generated IsoSprite tile bounds.
-    self.game.isoGroup.forEach(function (tile) {
-        var inBounds = tile.isoBounds.containsXY(self.cursorPos.x, self.cursorPos.y);
-        // If it does, do a little animation and tint change.
-        if (!tile.selected && inBounds) {
-            tile.selected = true;
-            tile.tint = 0x86bfda;
-            self.game.add.tween(tile).to({ isoZ: 4 }, 200, Phaser.Easing.Quadratic.InOut, true);
-        }
-        // If not, revert back to how it was.
-        else if (tile.selected && !inBounds) {
-            tile.selected = false;
-            tile.tint = 0xffffff;
-            self.game.add.tween(tile).to({ isoZ: 0 }, 200, Phaser.Easing.Quadratic.InOut, true);
-        }
-    });
+		// let self = this
+		//
+		//     // Loop through all tiles and test to see if the 3D position from above intersects with the automatically generated IsoSprite tile bounds.
+		//     self.game.isoGroup.forEach(function (tile) {
+		//         var inBounds = tile.isoBounds.containsXY(self.cursorPos.x, self.cursorPos.y);
+		//         // If it does, do a little animation and tint change.
+		//         if (!tile.selected && inBounds) {
+		//             tile.selected = true;
+		//             tile.tint = 0x86bfda;
+		//             self.game.add.tween(tile).to({ isoZ: 4 }, 200, Phaser.Easing.Quadratic.InOut, true);
+		//         }
+		//         // If not, revert back to how it was.
+		//         else if (tile.selected && !inBounds) {
+		//             tile.selected = false;
+		//             tile.tint = 0xffffff;
+		//             self.game.add.tween(tile).to({ isoZ: 0 }, 200, Phaser.Easing.Quadratic.InOut, true);
+		//         }
+		//     });
 		this.game.locationMap.update()
 	}
 

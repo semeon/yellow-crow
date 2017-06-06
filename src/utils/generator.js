@@ -48,8 +48,8 @@ export class Generator {
 			id += this.getCount()
 		}
 		
-		let height = 10
-		let width = 10
+		let height = 12
+		let width = 12
 		let name = chance.city()
 
 		let allObjects = []
@@ -70,8 +70,9 @@ export class Generator {
 						}
 						terrain.push({object: obj, x: x, y: y})
 						allObjects.push({object: obj, x: x, y: y})
+
 					// actor?
-					} else if (dice.rollBool(1)) { // creature?
+					} else if (dice.rollBool(3)) { // creature?
 						let obj = this.generateCreature()
 						creatures.push({object: obj, x: x, y: y})
 						allObjects.push({object: obj, x: x, y: y})

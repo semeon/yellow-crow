@@ -19,7 +19,6 @@ export default class MapObject {
 		this.tileY = props.tileY
 
 		this.sprite = this.game.add.isoSprite(props.x, props.y, 0, props.asset, 0)
-			
     this.sprite.anchor.set(0.5, 0.15)
 
 		this.actorHiglighter = new SpriteHighlighter({game: this.game, parent: this, colour: props.higlightColor})

@@ -15,6 +15,9 @@ export default class TileBoard {
 	constructor(props) {
 		this.game = props.game
 
+		this.projector = new Phaser.Plugin.Isometric.Projector(props.game)
+
+
 		this.locationData = props.data
 		this.playerData = props.playerData
 
@@ -22,6 +25,8 @@ export default class TileBoard {
 
 		this.width = props.data.width
 		this.height = props.data.height
+
+		this.cursorPos 
 
 		this.map
 		this.mapObjectsGroup
@@ -48,6 +53,8 @@ export default class TileBoard {
 		this.playerCharGroup = this.game.add.group()
 		this.allObstacles = this.game.add.group()
 		
+		this.cursorPos = new Phaser.Plugin.Isometric.Point3()
+		
 		this.marker = new Marker({game: this.game, board: this})
 		this.path = new Path({game: this.game, tileSize: this.tileSize})
 		// this.initTileMap()
@@ -60,32 +67,33 @@ export default class TileBoard {
 
 		this.game.world.bringToTop(this.allObstacles)
 
-		// this.marker.init()
+		this.marker.init()
 		// this.path.init({map: this, matrix: this.mapMatrix})
-	}
-
-	initTileMap(props) {
-    let data = ""
-    for (var y = 0; y < this.height; y++) {
-      for (var x = 0; x < this.width; x++)  {
-        data += this.game.rnd.between(0, 3).toString()
-        if (x < this.width-1) data += ','
-      }
-      if (y < this.height-1)  data += "\n"
-    }
-    // console.log(data)
-		// this.game.cache.addTilemap('dynamicMap', null, data, Phaser.Tilemap.CSV)
-
-    // this.map = this.game.add.tilemap('dynamicMap', this.tileSize, this.tileSize)
-    // this.map.addTilesetImage('grass', 'grass', this.tileSize, this.tileSize)
-    //
-    // this.layer1 = this.map.createLayer(0)
-    // this.layer1.resizeWorld()
-		this.currentLayer = this.layer1
-
 		this.game.input.addMoveCallback(function() { this.marker.update() }, this)
-		this.game.input.onDown.add(this.onTileClick, this)
 	}
+
+	// initTileMap(props) {
+	//     let data = ""
+	//     for (var y = 0; y < this.height; y++) {
+	//       for (var x = 0; x < this.width; x++)  {
+	//         data += this.game.rnd.between(0, 3).toString()
+	//         if (x < this.width-1) data += ','
+	//       }
+	//       if (y < this.height-1)  data += "\n"
+	//     }
+	//     // console.log(data)
+	// 	// this.game.cache.addTilemap('dynamicMap', null, data, Phaser.Tilemap.CSV)
+	//
+	//     // this.map = this.game.add.tilemap('dynamicMap', this.tileSize, this.tileSize)
+	//     // this.map.addTilesetImage('grass', 'grass', this.tileSize, this.tileSize)
+	//     //
+	//     // this.layer1 = this.map.createLayer(0)
+	//     // this.layer1.resizeWorld()
+	// 	this.currentLayer = this.layer1
+	//
+	// 	this.game.input.addMoveCallback(function() { this.marker.update() }, this)
+	// 	this.game.input.onDown.add(this.onTileClick, this)
+	// }
 
 	update(props) {
 		// this.playerCharGroup.forEach(
@@ -96,7 +104,6 @@ export default class TileBoard {
 		// )
 	}
 
-	
 }
 
 // Assets

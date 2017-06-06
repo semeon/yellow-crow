@@ -23,14 +23,14 @@ export default class extends Phaser.State {
     this.load.image('loaderBg', './assets/images/loader-bg.png')
     this.load.image('loaderBar', './assets/images/loader-bar.png')
 		
+		
+    this.game.time.advancedTiming = true
+    this.game.debug.renderShadow = false
+    this.game.stage.disableVisibilityChange = true
+    this.game.plugins.add(new Phaser.Plugin.Isometric(this.game))
+  	this.game.iso.anchor.setTo(0.5, 0.1)
+		
 		this.game.locationMap.preload()
-		
-    this.game.time.advancedTiming = true;
-    this.game.debug.renderShadow = false;
-    this.game.stage.disableVisibilityChange = true;
-    this.game.plugins.add(new Phaser.Plugin.Isometric(this.game));		
-  	this.game.iso.anchor.setTo(0.5, 0.1);		
-		
   }
 
   render () {
